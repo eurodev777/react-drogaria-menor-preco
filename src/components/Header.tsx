@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Clock, ShieldCheck, HeartPulse, Sparkles } from "lucide-react";
+import { Clock, ShieldCheck, HeartPulse, Sparkles, Heart } from "lucide-react";
 import { motion } from "motion/react";
 
 export function Header() {
@@ -28,19 +28,13 @@ export function Header() {
         
         {/* Logo and title */}
         <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-          <div className="bg-brand-blue p-2 rounded-xl shadow-md shrink-0">
-            <div className="w-12 h-12 flex items-center justify-center text-white font-black text-2xl tracking-tighter border-2 border-white rounded-lg">
-              MP
-            </div>
+          <div className="bg-brand-red p-2 rounded-xl shadow-md shrink-0">
+            <Heart color="blue" size={30} />
           </div>
           <div>
             <h1 className="text-3xl font-black text-brand-blue leading-none tracking-tight">
               Drogaria <span className="text-brand-red">Menor Preço</span>
             </h1>
-            <p className="text-xs text-slate-400 font-bold tracking-widest uppercase mt-1.5 flex items-center justify-center sm:justify-start gap-1">
-              <span>Parceiro Oficial:</span>
-              <span className="text-brand-red font-extrabold">Baby Beef Jardim</span>
-            </p>
           </div>
         </div>
 
