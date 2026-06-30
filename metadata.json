@@ -1,0 +1,6 @@
+{
+  "name": "Drogaria Menor Preço",
+  "description": "Site moderno para a Drogaria Menor Preço em Taguatinga, Brasília - DF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
