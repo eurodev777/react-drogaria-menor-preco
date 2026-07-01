@@ -40,14 +40,14 @@ export function Footer({ onOpenPolicy, onOpenTerms }: FooterProps) {
           <div className="md:col-span-3 space-y-4">
             <h5 className="text-xs font-bold uppercase tracking-wider text-brand-red">Navegação</h5>
             <ul className="space-y-2.5 text-sm text-slate-400 font-medium">
-              {/* <li>
+              <li>
                 <button 
                   onClick={() => handleScrollTo("promo-section")} 
                   className="hover:text-brand-red transition-colors cursor-pointer text-left"
                 >
                   Super Promoções
                 </button>
-              </li> */}
+              </li>
               <li>
                 <button 
                   onClick={() => handleScrollTo("instagram-section")} 
@@ -120,7 +120,7 @@ export function Footer({ onOpenPolicy, onOpenTerms }: FooterProps) {
           <div className="flex items-center gap-4">
             <span>Taguatinga, Brasília - DF</span>
             <span>•</span>
-            <span>CNPJ: 27.397.190/0001-89</span>
+            <span>CNPJ: XX.XXX.XXX/XXXX-XX</span>
           </div>
         </div>
 

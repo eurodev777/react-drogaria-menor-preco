@@ -13,7 +13,7 @@ export function LocationSection() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const mapUrl = "https://maps.app.goo.gl/f93BaeqxRMuCk1pT7";
+  const mapUrl = "https://www.google.com/maps/search/?api=1&query=Colonia+Agricola+Samambaia+CH+131+LOTE+2A+LOJA+4+Taguatinga+Brasilia+DF";
 
   return (
     <section id="location-section" className="max-w-6xl mx-auto px-4 py-16 space-y-10">
@@ -145,7 +145,13 @@ export function LocationSection() {
             </div>
 
             {/* Google Map real responsive iframe fallback - provides incredible real world utility */}
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.631824924747!2d-48.03948782475215!3d-15.823355823669054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a33f2a680b1f3%3A0xa9e50389df31226!2sDrogaria%20Menor%20Pre%C3%A7o!5e0!3m2!1spt-BR!2sbr!4v1782847035374!5m2!1spt-BR!2sbr" width="600" height="450" allowFullScreen="" loading="lazy" referrerPolicy="strict-origin-when-cross-origin"></iframe>
+            <iframe 
+              title="Drogaria Menor Preço Localização"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.74075199616!2d-48.0416!3d-15.8208!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDQ5JzE0LjkiUyA0OMKwMDInMjkuOCJX!5e0!3m2!1spt-BR!2sbr!4v1625000000000!5m2!1spt-BR!2sbr"
+              className="w-full h-full border-0 absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none group-hover:pointer-events-auto"
+              allowFullScreen={false} 
+              loading="lazy"
+            />
 
           </div>
         </div>

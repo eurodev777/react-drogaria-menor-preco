@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MessageCircle, PhoneCall, Award, HelpCircle, Heart, Star, Sparkles, MapPinned, Motorbike } from "lucide-react";
+import { MessageCircle, PhoneCall, Award, HelpCircle, Heart, Star, Sparkles } from "lucide-react";
 import { CountdownTimer } from "./components/CountdownTimer";
 import { Header } from "./components/Header";
 import { PromoOffers } from "./components/PromoOffers";
@@ -23,7 +23,7 @@ export default function App() {
     setModalType(null);
   };
 
-  const WHATSAPP_NUMBER = "556133518138";
+  const WHATSAPP_NUMBER = "5561999999999";
 
   return (
     <div className="min-h-screen bg-gray-50/50 text-gray-800 font-sans selection:bg-teal-500 selection:text-white">
@@ -59,7 +59,7 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-left">
                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
                   <div className="w-10 h-10 bg-red-50 text-brand-red rounded-xl flex items-center justify-center mb-4 border border-red-100 font-extrabold">
-                    <Motorbike />
+                    ✓
                   </div>
                   <h3 className="font-bold text-slate-900">Entrega Grátis</h3>
                   <p className="text-xs text-slate-500 mt-1 leading-relaxed">A partir de R$ 25,00 em toda Taguatinga e Colônia Agrícola Samambaia.</p>
@@ -67,7 +67,7 @@ export default function App() {
                 
                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
                   <div className="w-10 h-10 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center mb-4 border border-blue-100 font-extrabold">
-                    <MapPinned />
+                    📍
                   </div>
                   <h3 className="font-bold text-slate-900">Localização Fácil</h3>
                   <p className="text-xs text-slate-500 mt-1 leading-relaxed">Colônia Agrícola Samambaia, CH 131 LOTE 2A LOJA 4, Brasília - DF.</p>

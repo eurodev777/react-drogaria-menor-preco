@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Truck, ShoppingBag, Plus, Minus, Send, Check, AlertCircle, ShoppingCart, TicketPercent, ShoppingBasket, Pill } from "lucide-react";
+import { Truck, ShoppingBag, Plus, Minus, Send, Check, AlertCircle, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface OfferItem {
@@ -14,39 +14,49 @@ interface OfferItem {
 }
 
 export function PromoOffers() {
-  const WHATSAPP_NUMBER = "556133518138"; // Placeholder, standard Brasília (61) DDD
+  const WHATSAPP_NUMBER = "5561999999999"; // Placeholder, standard Brasília (61) DDD
 
   const offers: OfferItem[] = [
     {
       id: "1",
-      name: "3 Caixas de Nimesulida",
-      category: "Medicamentos",
-      oldPrice: 12.43,
-      newPrice: 9.99,
+      name: "Multivitamínico Premium A-Z (60 Cáps)",
+      category: "Suplementos",
+      oldPrice: 59.90,
+      newPrice: 29.95,
       imageColor: "from-amber-400 to-orange-500",
-      iconText: <Pill />,
-      description: "Alívio da dor e inflamação",
+      iconText: "💊",
+      description: "Mais energia, imunidade e disposição para o seu dia a dia.",
     },
     {
       id: "2",
-      name: "3 Caixas de Neosoro",
-      category: "Medicamentos",
-      oldPrice: 19.60,
-      newPrice: 11.99,
-      imageColor: "from-amber-400 to-orange-500",
-      iconText: <Pill />,
-      description: "Alívio na congestão nasal",
+      name: "Protetor Solar Facial FPS 60 (50g)",
+      category: "Dermatológico",
+      oldPrice: 89.90,
+      newPrice: 44.95,
+      imageColor: "from-sky-400 to-indigo-500",
+      iconText: "🧴",
+      description: "Toque seco, alta proteção contra raios UVA/UVB e envelhecimento precoce.",
     },
     {
       id: "3",
-      name: "3 Caixas de Losartana",
-      category: "Medicamentos",
-      oldPrice: 17.97,
-      newPrice: 9.99,
-      imageColor: "from-amber-400 to-orange-500",
-      iconText: <Pill />,
-      description: "Auxilia no controle da pressão alta",
+      name: "Kit Imunidade Vitamina C + Zinco (30 Comp)",
+      category: "Vitaminas",
+      oldPrice: 34.90,
+      newPrice: 17.45,
+      imageColor: "from-rose-400 to-red-500",
+      iconText: "🍊",
+      description: "Dupla ação antioxidante para fortalecer as defesas naturais do corpo.",
     },
+    {
+      id: "4",
+      name: "Colágeno Hidrolisado Verisol (150g)",
+      category: "Beleza & Bem-Estar",
+      oldPrice: 98.00,
+      newPrice: 49.00,
+      imageColor: "from-pink-400 to-purple-500",
+      iconText: "✨",
+      description: "Auxilia na firmeza da pele, fortalecimento de unhas e cabelos.",
+    }
   ];
 
   // Cart state: Record of itemId -> quantity
@@ -82,62 +92,41 @@ export function PromoOffers() {
 
   const isFreeDelivery = getCartTotal() >= 25.00;
 
-  const formatPrice = (value: number) =>
-    value.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+  const handleSendOrder = () => {
+    const total = getCartTotal();
+    if (total === 0) return;
+
+    let message = `*Desejo fazer um pedido na Drogaria Menor Preço!*\n\n`;
+    message += `🛒 *MEUS ITENS:*\n`;
+    
+    (Object.entries(cart) as [string, number][]).forEach(([id, qty]) => {
+      const item = offers.find((o) => o.id === id);
+      if (item) {
+        message += `• ${qty}x ${item.name} - R$ ${(item.newPrice * qty).toFixed(2)}\n`;
+      }
     });
 
-    const handleSendOrder = () => {
-      const total = getCartTotal();
-      if (total === 0) return;
+    message += `\n💵 *Subtotal:* R$ ${total.toFixed(2)}`;
+    message += `\n🛵 *Frete:* ${isFreeDelivery ? "_Grátis_" : "_R$ 7,00_"}`;
+    message += `\n💰 *Total Geral:* R$ ${(total + (isFreeDelivery ? 0 : 7)).toFixed(2)}`;
     
-      const frete = isFreeDelivery ? 0 : 7;
-    
-      const items = (Object.entries(cart) as [string, number][])
-        .map(([id, qty]) => {
-          const item = offers.find((o) => o.id === id);
-          if (!item) return "";
-    
-          return [
-            `• ${qty}x ${item.name}`,
-            `  R$ ${formatPrice(item.newPrice * qty)}`,
-          ].join("\n");
-        })
-        .filter(Boolean)
-        .join("\n\n");
-    
-      const message = [
-        "*NOVO PEDIDO - Drogaria Menor Preço*",
-        "",
-        "*Itens do pedido*",
-        "",
-        items,
-        "",
-        "------------------------------",
-        "*RESUMO*",
-        `Subtotal: R$ ${formatPrice(total)}`,
-        `Frete: ${isFreeDelivery ? "Grátis" : "R$ 7,00"}`,
-        `Total: R$ ${formatPrice(total + frete)}`,
-        "",
-        "*Endereço*",
-        typedAddress.trim() || "A combinar no atendimento.",
-        "",
-        "_Pedido enviado pelo site._",
-      ].join("\n");
-    
-      console.log(message);
-    
-      window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-        message
-      )}`;
-    };
+    if (typedAddress.trim()) {
+      message += `\n\n📍 *Endereço de Entrega:*\n${typedAddress}`;
+    } else {
+      message += `\n\n📍 _Combinar endereço de entrega na conversa_`;
+    }
+
+    message += `\n\n⏱️ _Pedido enviado pelo site_`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, "_blank");
+  };
 
   return (
     <section id="promo-section" className="max-w-6xl mx-auto px-4 py-12 space-y-12">
-
+      
       {/* Delivery Call-To-Action Banner */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -145,7 +134,7 @@ export function PromoOffers() {
       >
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full translate-x-20 -translate-y-20 blur-2xl" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-brand-red/20 rounded-full -translate-x-10 translate-y-10 blur-xl" />
-
+        
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-8 z-10">
           <div className="space-y-4 max-w-xl text-center md:text-left">
             <span className="inline-flex items-center gap-1.5 bg-white/20 text-white px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
@@ -158,9 +147,9 @@ export function PromoOffers() {
               Entrega totalmente <span className="font-extrabold text-white underline underline-offset-4">GRATUITA</span> em toda Taguatinga para pedidos a partir de <span className="font-extrabold text-white">R$ 25,00</span>!
             </p>
           </div>
-
+          
           <div className="flex flex-col gap-3 w-full sm:w-auto shrink-0">
-            <a
+            <a 
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20pedido%20na%20Drogaria%20Menor%20Pre%C3%A7o.%20Vi%20as%20promo%C3%A7%C3%B5es%20no%20site.`}
               target="_blank"
               rel="noreferrer"
@@ -175,13 +164,13 @@ export function PromoOffers() {
 
       {/* Offers Catalog & Cart Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
+        
         {/* Grid of Product Offers */}
         <div className="lg:col-span-2 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h3 className="text-2xl font-display font-bold text-gray-900 flex items-center gap-2">
-                <ShoppingBasket size={34} /> Super Promoções do Dia
+              <h3 className="text-2xl font-display font-bold text-gray-900">
+                ⚡ Super Promoções do Dia
               </h3>
               <p className="text-sm text-gray-500">
                 Economia de verdade com frete grátis facilitado.
@@ -193,8 +182,8 @@ export function PromoOffers() {
             {offers.map((item) => {
               const qtyInCart = cart[item.id] || 0;
               return (
-                <div
-                  key={item.id}
+                <div 
+                  key={item.id} 
                   className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group relative overflow-hidden"
                 >
                   {/* Item Image & Badge Container */}
@@ -203,14 +192,14 @@ export function PromoOffers() {
                       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${item.imageColor} flex items-center justify-center text-3xl shadow-sm`}>
                         {item.iconText}
                       </div>
-                      {/* <span className="bg-rose-50 text-rose-600 px-2.5 py-1 rounded-full text-xs font-bold">
+                      <span className="bg-rose-50 text-rose-600 px-2.5 py-1 rounded-full text-xs font-bold">
                         50% OFF
-                      </span> */}
+                      </span>
                     </div>
 
-                    {/* <span className="text-[10px] uppercase font-extrabold tracking-wider text-brand-red bg-red-50 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] uppercase font-extrabold tracking-wider text-brand-red bg-red-50 px-2 py-0.5 rounded-md">
                       {item.category}
-                    </span> */}
+                    </span>
                     <h4 className="font-bold text-gray-800 text-lg mt-2 group-hover:text-brand-blue transition-colors">
                       {item.name}
                     </h4>
@@ -232,14 +221,14 @@ export function PromoOffers() {
 
                     {qtyInCart > 0 ? (
                       <div className="flex items-center justify-between bg-red-50 rounded-xl p-1.5 border border-red-100">
-                        <button
+                        <button 
                           onClick={() => removeFromCart(item.id)}
                           className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-brand-red font-extrabold hover:bg-red-100 transition-colors shadow-sm"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
                         <span className="font-bold text-brand-blue text-sm">{qtyInCart} no carrinho</span>
-                        <button
+                        <button 
                           onClick={() => addToCart(item.id)}
                           className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-brand-red font-extrabold hover:bg-red-100 transition-colors shadow-sm"
                         >
@@ -247,7 +236,7 @@ export function PromoOffers() {
                         </button>
                       </div>
                     ) : (
-                      <button
+                      <button 
                         onClick={() => addToCart(item.id)}
                         className="w-full bg-brand-blue hover:bg-brand-blue-hover active:bg-brand-blue text-white font-bold py-2 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-sm"
                       >
@@ -284,7 +273,7 @@ export function PromoOffers() {
 
             <AnimatePresence mode="popLayout">
               {getCartCount() === 0 ? (
-                <motion.div
+                <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -296,7 +285,7 @@ export function PromoOffers() {
                   <p className="text-sm font-medium text-gray-500">Adicione ofertas para montar seu carrinho!</p>
                 </motion.div>
               ) : (
-                <motion.div
+                <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="space-y-4"
