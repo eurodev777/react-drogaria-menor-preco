@@ -178,6 +178,26 @@ export function PromoOffers() {
             </div>
           </div>
 
+          {/* Direct order helper for senior users who might find the grid/cart complicated */}
+          <div className="bg-emerald-50 border-2 border-dashed border-emerald-500/30 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+            <div className="space-y-1 text-center md:text-left">
+              <p className="text-sm font-extrabold text-emerald-800 uppercase tracking-wider flex items-center justify-center md:justify-start gap-2">
+                <span>👵👴 PREFERE PEDIR SEM USAR O CARRINHO?</span>
+              </p>
+              <p className="text-xs text-slate-600 leading-relaxed max-w-xl">
+                Você não precisa adicionar itens aqui se achar difícil! Basta clicar no botão verde ao lado para falar direto conosco, mandar uma foto da sua receita ou pedir o que precisa.
+              </p>
+            </div>
+            <a 
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1!%20Gostaria%20de%20enviar%20uma%20receita%20ou%20fazer%20um%20pedido%20diretamente.`}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-400 text-teal-950 font-black px-5 py-3.5 rounded-xl text-xs transition-all shadow-md text-center shrink-0 flex items-center justify-center gap-1.5 active:scale-95"
+            >
+              <span>🟢 ENVIAR RECEITA / PEDIR DIRETAMENTE</span>
+            </a>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {offers.map((item) => {
               const qtyInCart = cart[item.id] || 0;
